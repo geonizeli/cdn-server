@@ -1,13 +1,5 @@
-import { Application } from "../modules/oak.ts";
-
-const app = new Application();
+import { server } from "./application/application.ts";
 
 export const main = async () => {
-  app.use((ctx) => {
-    ctx.response.body = {
-      message: "Hello world!",
-    };
-  });
-
-  await app.listen({ port: 3000 });
+  await server();
 };
