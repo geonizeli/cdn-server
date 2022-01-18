@@ -9,10 +9,14 @@ const getAndStoreAsset = async (
 
   if (!distribution) return undefined;
 
-  const assetRequest = await fetch(`http://${distribution.origin}/${fileName}`);
+  const assetRequest = await fetch(
+    `https://${distribution.origin}/${fileName}`,
+  );
   const asset = await assetRequest.text();
 
-  return await AssetsRepository.create(distributionId, fileName, asset);
+  await AssetsRepository.create(distributionId, fileName, asset);
+
+  return asset;
 };
 
 const retriveAsset = async (

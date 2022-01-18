@@ -13,8 +13,8 @@ const create = async (
   id: string,
   fileName: string,
   content: string,
-): Promise<string> => {
-  return await RedisClient.set(path([id, "assets", fileName]), content);
+): Promise<void> => {
+  await RedisClient.set(path([id, "assets", fileName]), content);
 };
 
 export const AssetsRepository = {
