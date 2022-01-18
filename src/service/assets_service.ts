@@ -11,12 +11,11 @@ const getAndStoreAsset = async (
 
   const assetRequest = await fetch(
     `https://${distribution.origin}/${fileName}`,
-  );
-  const asset = await assetRequest.text();
+  ).then((response) => response.text());
 
-  await AssetsRepository.create(distributionId, fileName, asset);
+  await AssetsRepository.create(distributionId, fileName, assetRequest);
 
-  return asset;
+  return assetRequest;
 };
 
 const retriveAsset = async (

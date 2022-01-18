@@ -1,14 +1,19 @@
 import { RedisClient } from "../infra/redis_client.ts";
 import { Distribution } from "../domain/distribution_domain.ts";
+import { notEmpty } from "../utils/notEmpty.ts";
 
 const path = (...paths: string[]): string => `distribution.${paths.join(".")}`;
 
-const listIds = async (): Promise<string[]> => {
+const list = async (): Promise<Distribution[]> => {
   const keys = await RedisClient.keys("distribution*");
 
-  return keys.map((key) =>
+  const ids = keys.map((key) =>
     key.replace("distribution.", "").replace(".origin", "")
   );
+
+  const distributions = await Promise.all(ids.map(find));
+
+  return distributions.filter(notEmpty);
 };
 
 const find = async (id: string): Promise<Distribution | undefined> => {
@@ -33,7 +38,7 @@ const create = async (newOrigin: string): Promise<Distribution> => {
 };
 
 export const DistributionRepository = {
-  listIds,
+  list,
   find,
   create,
 };
