@@ -9,6 +9,15 @@ const find = async (
   return await RedisClient.get(path([id, "assets", fileName]));
 };
 
+const create = async (
+  id: string,
+  fileName: string,
+  content: string,
+): Promise<string> => {
+  return await RedisClient.set(path([id, "assets", fileName]), content);
+};
+
 export const AssetsRepository = {
   find,
+  create,
 };

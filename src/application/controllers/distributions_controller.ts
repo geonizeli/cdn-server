@@ -13,11 +13,4 @@ router.post("/distributions", async ({ response, request }) => {
   response.body = await DistributionService.registerOrigin(result.origin);
 });
 
-router.get("/:id/:fileName", async ({ response, params }) => {
-  response.body = await DistributionService.retriveAsset(
-    params.id,
-    params.fileName,
-  );
-});
-
 export const distributionsController = router;
