@@ -1,4 +1,4 @@
-# Deno Boilerplate
+# CDN Server
 
 ## Useful scripts
 
